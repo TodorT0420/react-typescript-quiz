@@ -19,7 +19,7 @@ const App = () => {
   const renderScreenByStep = () => {
     switch (step) {
       case Step.SetQuestionQty:
-        return <SetQuestionQty />;
+        return <SetQuestionQty defaultValue={10} max={30} min={5} step={5} />;
       case Step.SetQuestionCategory:
         return <></>;
       case Step.SetQuestionDifficulty:
