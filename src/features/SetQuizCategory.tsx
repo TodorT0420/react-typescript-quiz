@@ -5,7 +5,7 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 const SetQuestionCategory = (props: { categories: QuizCategory[], onClickNext: (categoryId: string) => void; }) => {
 
-    const [selectedCategoryId, setSelectedCategoryId] = useState<string>(props.categories[0].id.toString())
+    const [selectedCategoryId, setSelectedCategoryId] = useState<string>(props.categories[0]?.id.toString())
 
     const radioList = props.categories.map((category: QuizCategory) => {
         return <Radio value={category.id.toString()}>{category.name}</Radio>
