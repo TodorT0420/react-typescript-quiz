@@ -1,11 +1,12 @@
 import { Box, Image } from "@chakra-ui/react"
 import Header from "./components/Header/Header"
 import "../global.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SetQuestionQty from "./features/SetQuestionQty";
 import buggleImg from "./assets/bubble.png";
-import { FetchQuizParams, QuizDifficulty, QuizType } from "./тъпес/quiz-type";
+import { FetchQuizParams, QuizCategory, QuizDifficulty, QuizType } from "./тъпес/quiz-type";
 import SetQuestionCategory from "./features/SetQuestionCategory";
+import { QuizAPI } from "./api/quiz-api";
 
 enum Step {
   SetQuestionQty,
@@ -24,6 +25,13 @@ const App = () => {
     type: QuizType.Multiple
   });
 
+  const [categories, setCategories] = useState<QuizCategory[]>([]);
+  useEffect(() => {
+    (async () => {
+      setCategories(await QuizAPI.fetchCategories());
+    })();
+  }, [])
+
   const renderScreenByStep = () => {
     switch (step) {
       case Step.SetQuestionQty:
@@ -32,7 +40,7 @@ const App = () => {
           setStep(Step.SetQuestionCategory)
         }} defaultValue={10} max={30} min={5} step={5} />;
       case Step.SetQuestionCategory:
-        return <SetQuestionCategory/>;
+        return <SetQuestionCategory categories={categories} />;
       case Step.SetQuestionDifficulty:
         return <></>;
       case Step.Play:

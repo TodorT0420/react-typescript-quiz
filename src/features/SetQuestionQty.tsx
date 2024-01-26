@@ -44,7 +44,7 @@ const SetQuestionQty = (p: Props) => {
                     <SliderThumb />
                 </Slider>
             </Flex>
-<Button onClick={() => p.onClickNext(sliderValue)} position={"absolute"} top={"80%"} right={"10%"} rightIcon={<ArrowForwardIcon/>}>Set category</Button>
+            <Button onClick={() => p.onClickNext(sliderValue)} position={"absolute"} top={"80%"} right={"10%"} rightIcon={<ArrowForwardIcon />}>Set category</Button>
         </>
     )
 }

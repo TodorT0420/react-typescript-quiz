@@ -1,21 +1,46 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { QuizCategory } from "../тъпес/quiz-type";
-import { QuizAPI } from "../api/quiz-api";
+import { Button, Flex, Heading, Radio, RadioGroup, SimpleGrid } from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 
-const SetQuestionCategory = () => {
+const SetQuestionCategory = (props: { categories: QuizCategory[] }) => {
 
-    const [categories, setCategories] = useState<QuizCategory[]>([]);
+    const [selectedCategoryId, setSelectedCategoryId] = useState<string>(props.categories[0].id.toString())
 
-    useEffect(() => {
-        (async () => {
-            setCategories(await QuizAPI.fetchCategories());
-        })();
-    }, [])
+    const radioList = props.categories.map((category: QuizCategory) => {
+        return <Radio value={category.id.toString()}>{category.name}</Radio>
 
-console.log(categories);
+    })
 
     return (
-        <div>setQuestionCategory</div>
+        <div>
+            <Flex direction={"column"} alignItems={"center"}>
+                <Heading as='h1' fontSize={"3xl"} mb={20}>
+                    Which topic ?
+                </Heading>
+            </Flex>
+
+            <RadioGroup
+                display={"flex"}
+                justifyContent={"center"}
+                value={selectedCategoryId}
+                onChange={setSelectedCategoryId}>
+                <SimpleGrid
+                    columns={[1, 3, 4]}
+                    spacing={"4"}>
+                    {radioList}
+                </SimpleGrid>
+            </RadioGroup>
+
+            <Button
+                onClick={() => ''}
+                position={"absolute"}
+                top={"80%"}
+                right={"10%"}
+                rightIcon={<ArrowForwardIcon />}>
+                Set difficulty
+            </Button>
+        </div>
     )
 }
 
