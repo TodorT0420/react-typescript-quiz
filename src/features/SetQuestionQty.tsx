@@ -1,4 +1,5 @@
-import { Flex, Heading, Slider, SliderFilledTrack, SliderMark, SliderThumb, SliderTrack } from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { Button, Flex, Heading, Slider, SliderFilledTrack, SliderMark, SliderThumb, SliderTrack } from "@chakra-ui/react";
 import { useState } from "react"
 
 interface Props {
@@ -6,6 +7,7 @@ interface Props {
     max: number;
     min: number;
     step: number;
+    onClickNext: (amount: number) => void;
 }
 
 const SetQuestionQty = (p: Props) => {
@@ -18,6 +20,7 @@ const SetQuestionQty = (p: Props) => {
         }
         return marks;
     }
+
 
     return (
         <>
@@ -41,6 +44,7 @@ const SetQuestionQty = (p: Props) => {
                     <SliderThumb />
                 </Slider>
             </Flex>
+<Button onClick={() => p.onClickNext(sliderValue)} position={"absolute"} top={"80%"} right={"10%"} rightIcon={<ArrowForwardIcon/>}>Set category</Button>
         </>
     )
 }
