@@ -3,7 +3,7 @@ import { QuizCategory } from "../тъпес/quiz-type";
 import { Button, Flex, Heading, Radio, RadioGroup, SimpleGrid } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 
-const SetQuestionCategory = (props: { categories: QuizCategory[] }) => {
+const SetQuestionCategory = (props: { categories: QuizCategory[], onClickNext: (categoryId: string) => void; }) => {
 
     const [selectedCategoryId, setSelectedCategoryId] = useState<string>(props.categories[0].id.toString())
 
@@ -33,7 +33,7 @@ const SetQuestionCategory = (props: { categories: QuizCategory[] }) => {
             </RadioGroup>
 
             <Button
-                onClick={() => ''}
+                onClick={() => props.onClickNext(selectedCategoryId)}
                 position={"absolute"}
                 top={"80%"}
                 right={"10%"}

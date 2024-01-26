@@ -25,10 +25,13 @@ const App = () => {
     type: QuizType.Multiple
   });
 
+  console.log(quizParams);
+  
+
   const [categories, setCategories] = useState<QuizCategory[]>([]);
   useEffect(() => {
     (async () => {
-      setCategories(await QuizAPI.fetchCategories());
+      setCategories([{ id: -1, name: "Mixed" }, ...(await QuizAPI.fetchCategories())]);
     })();
   }, [])
 
@@ -40,7 +43,13 @@ const App = () => {
           setStep(Step.SetQuestionCategory)
         }} defaultValue={10} max={30} min={5} step={5} />;
       case Step.SetQuestionCategory:
-        return <SetQuestionCategory categories={categories} />;
+        return <SetQuestionCategory
+          categories={categories}
+          onClickNext={(category: string) => {
+            setQuizParams({ ...quizParams, category: category === "-1" ? "" : category});
+            setStep(Step.SetQuestionDifficulty);
+          }}
+        />;
       case Step.SetQuestionDifficulty:
         return <></>;
       case Step.Play:
