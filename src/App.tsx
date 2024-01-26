@@ -5,7 +5,7 @@ import { useState } from "react";
 import SetQuestionQty from "./features/SetQuestionQty";
 import buggleImg from "./assets/bubble.png";
 import { FetchQuizParams, QuizDifficulty, QuizType } from "./тъпес/quiz-type";
-import SetQuestionCategory from "./features/setQuestionCategory";
+import SetQuestionCategory from "./features/SetQuestionCategory";
 
 enum Step {
   SetQuestionQty,

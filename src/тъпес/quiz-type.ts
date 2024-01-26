@@ -17,3 +17,12 @@ export enum QuizType {
     Multiple = "multiple",
     Boolean = "boolean"
 }
+
+export interface QuizCategory {
+    id: number;
+    name: string;
+}
+
+export interface FetchQuizCategoriesResponse {
+    trivia_categories: QuizCategory[];
+}
