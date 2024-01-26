@@ -4,10 +4,11 @@ import "../global.css";
 import { useEffect, useState } from "react";
 import SetQuestionQty from "./features/SetQuestionQty";
 import buggleImg from "./assets/bubble.png";
-import { FetchQuizParams, QuizCategory, QuizDifficulty, QuizType } from "./тъпес/quiz-type";
+import { FetchQuizParams, QuizCategory, QuizDifficulty, QuizItem, QuizType } from "./types/quiz-type";
 import SetQuestionCategory from "./features/SetQuizCategory";
 import { QuizAPI } from "./api/quiz-api";
 import SetQuizDifficulty from "./features/SetQuizDifficulty";
+import PlayQuiz from "./features/PlayQuiz";
 
 enum Step {
   SetQuestionQty,
@@ -19,6 +20,7 @@ enum Step {
 
 const App = () => {
   const [step, setStep] = useState<Step>(Step.SetQuestionQty);
+  const [quiz, setQuiz] = useState<QuizItem[]>([]);
   const [quizParams, setQuizParams] = useState<FetchQuizParams>({
     amount: 0,
     category: "",
@@ -52,12 +54,20 @@ const App = () => {
           }}
         />;
       case Step.SetQuestionDifficulty:
-        return <SetQuizDifficulty onClickNext={(difficulty: QuizDifficulty) => {
-          setQuizParams({ ...quizParams, difficulty });
-          setStep(Step.Play);
+        return <SetQuizDifficulty onClickNext={async (difficulty: QuizDifficulty) => {
+          const params = { ...quizParams, difficulty };
+          setQuizParams(params);
+          const quizResponse = await QuizAPI.fetchQuiz(params);
+          if (quizResponse.length > 0) {
+            setQuiz(quizResponse);
+            setStep(Step.Play);
+          } else {
+            alert(`Couldn't find ${params.amount} questions for this category, restarting game`);
+            setStep(Step.SetQuestionQty);
+          }
         }} />;
       case Step.Play:
-        return <></>;
+        return <PlayQuiz quiz={quiz} />;
       case Step.Score:
         return <></>;
     }

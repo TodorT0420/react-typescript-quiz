@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { QuizCategory } from "../тъпес/quiz-type";
+import { QuizCategory } from "../types/quiz-type";
 import { Button, Flex, Heading, Radio, RadioGroup, SimpleGrid } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 

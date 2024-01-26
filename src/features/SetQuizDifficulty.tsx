@@ -1,7 +1,7 @@
 import { ArrowForwardIcon } from "@chakra-ui/icons"
 import { Button, Flex, Heading, Radio, RadioGroup, VStack } from "@chakra-ui/react"
 import { useState } from "react"
-import { QuizDifficulty } from "../тъпес/quiz-type"
+import { QuizDifficulty } from "../types/quiz-type"
 
 const SetQuizDifficulty = (props: {onClickNext: (difficulty: QuizDifficulty) => void}) => {
     const [difficulty, setCurrentDifficulty] = useState<QuizDifficulty>(QuizDifficulty.Mixed);
