@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { QuizItem } from "../types/quiz-type"
+import { QuizItem } from "../../types/quiz-type"
 import { Box, Flex, HStack, Heading, Radio, RadioGroup, SimpleGrid, Text } from "@chakra-ui/react";
 import Lottie from "lottie-react";
-import validAnim from "../assets/lottie/valid.json";
-import invalidAnim from "../assets/lottie/invalid.json";
+import validAnim from "../../assets/lottie/valid.json";
+import invalidAnim from "../../assets/lottie/invalid.json";
+import Timer from "./Timer";
+import { QuestionIcon } from "@chakra-ui/icons";
 
 
 const PlayQuiz = (props: { quiz: QuizItem[] }) => {
@@ -65,12 +67,22 @@ const PlayQuiz = (props: { quiz: QuizItem[] }) => {
                 dangerouslySetInnerHTML={{ __html: availableAnswer }} />
         </Radio>
     })
+
+    const failQuestion = () => {
+        setHistory([...history, false]);
+        setQuestionStatus("invalid");
+    }
     return (
         <Flex
             direction={"column"}
             alignItems={"center"}
             justify={"center"}>
             {renderProgressBar()}
+            {questionStatus === "unanswered" && (
+                <Box position={"absolute"} top={50} right={50}>
+                    <Timer max={10} onFinished={failQuestion}/>
+                </Box>
+            )}
             <Heading
                 fontSize={"3xl"}
                 mt={100}
