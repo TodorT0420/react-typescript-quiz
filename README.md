@@ -1,30 +1,22 @@
-# React + TypeScript + Vite
+# Quiz App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+This is a small quiz application that allows you to select the number of questions, the category, and the difficulty of the questions. The application is developed with **JavaScript**, **React**, and **TypeScript**. For styling, the **Chakra UI** library is used. The data for the questions are fetched from the **Trivia API** using the **axios** library. The **Lottie** library is used for animations.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Home Page**: There is a slider through which we can select how many questions we want to answer.
+- **Category Selection**: There is a button that takes us to a view where we can select the category of the questions.
+- **Difficulty Selection**: There is a button that takes us to a page where we can select the difficulty of the questions.
+- **Quiz Start**: After selecting the difficulty, we can start the quiz with a button. We have 10 seconds to answer each question. When we select a given answer, all answers are colored in red for the wrong ones and green for the correct ones.
+- **Animations**: There is also an animation that shows us whether we have given the correct answer.
+- **Progress Bar**: Above the question itself, we have a progress bar that shows us how many questions we have answered so far and whether they are correct or wrong.
+- **Score View**: In the end, we have a score view where the user sees their result.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+![app question-quantity](/images/Screenshot%202024-01-27%20at%2018.47.21.png)
+![app categories](/images/Screenshot%202024-01-27%20at%2018.54.36.png)
+![app quiz-difficulty](/images/Screenshot%202024-01-27%20at%2018.54.40.png)
+![app answering-question](/images/Screenshot%202024-01-27%20at%2018.47.34.png)
+![app score](/images/Screenshot%202024-01-27%20at%2018.55.15.png)
