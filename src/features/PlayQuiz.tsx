@@ -8,13 +8,21 @@ import invalidAnim from "../assets/lottie/invalid.json";
 
 const PlayQuiz = (props: { quiz: QuizItem[] }) => {
     const [currentQuizItemIndex, setCurrentQuizItemIndex] = useState<number>(0);
-
     const currentQuizItem: QuizItem = props.quiz[currentQuizItemIndex];
-
-    const availableAnswers: string[] = [currentQuizItem.correct_answer, ...currentQuizItem.incorrect_answers];
-
     const [answer, setAnswer] = useState<string>();
     const [questionStatus, setQuestionStatus] = useState<"valid" | "invalid" | "unanswered">("unanswered");
+    const [availableAnswers, setAvailableAnswers] = useState<string[]>([]);
+
+    useEffect(() => {
+        setAvailableAnswers(
+            [
+                currentQuizItem.correct_answer,
+                ...currentQuizItem.incorrect_answers,
+            ].sort(() => Math.random() - 0.5)
+        );
+    }, [currentQuizItemIndex])
+
+
 
     useEffect(() => {
         if (answer) {
@@ -35,7 +43,13 @@ const PlayQuiz = (props: { quiz: QuizItem[] }) => {
             key={availableAnswer}
             value={availableAnswer}
         >
-            <Text dangerouslySetInnerHTML={{ __html: availableAnswer }} />
+            <Text
+                color={questionStatus === "unanswered"
+                    ? "black"
+                    : isValidAnswer(availableAnswer)
+                        ? "green.400"
+                        : "red.400"}
+                dangerouslySetInnerHTML={{ __html: availableAnswer }} />
         </Radio>
     })
     return (
@@ -50,7 +64,7 @@ const PlayQuiz = (props: { quiz: QuizItem[] }) => {
                 dangerouslySetInnerHTML={{ __html: currentQuizItem.question }} />
             <RadioGroup
                 value={answer}
-                onChange={setAnswer}>
+                onChange={questionStatus === "unanswered" ? setAnswer : undefined}>
                 <SimpleGrid
                     columns={2}
                     spacing={4}>
@@ -63,7 +77,7 @@ const PlayQuiz = (props: { quiz: QuizItem[] }) => {
                 animationData={questionStatus === "unanswered" ?
                     null :
                     questionStatus === "valid" ?
-                    validAnim : invalidAnim}
+                        validAnim : invalidAnim}
                 onComplete={() => {
                     setQuestionStatus("unanswered")
                     setCurrentQuizItemIndex(currentQuizItemIndex + 1)
@@ -72,4 +86,4 @@ const PlayQuiz = (props: { quiz: QuizItem[] }) => {
     )
 }
 
-export default PlayQuiz
+export default PlayQuiz;
