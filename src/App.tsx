@@ -9,6 +9,7 @@ import SetQuestionCategory from "./features/SetQuizCategory";
 import { QuizAPI } from "./api/quiz-api";
 import SetQuizDifficulty from "./features/SetQuizDifficulty";
 import PlayQuiz from "./features/PlayQuiz/PlayQuiz";
+import Score from "./features/PlayQuiz/Score";
 
 enum Step {
   SetQuestionQty,
@@ -27,9 +28,7 @@ const App = () => {
     difficulty: QuizDifficulty.Mixed,
     type: QuizType.Multiple
   });
-
-  console.log(quizParams);
-
+  const [history, setHistory] = useState<boolean[]>([]);
 
   const [categories, setCategories] = useState<QuizCategory[]>([]);
   useEffect(() => {
@@ -67,9 +66,14 @@ const App = () => {
           }
         }} />;
       case Step.Play:
-        return <PlayQuiz quiz={quiz} />;
+        return <PlayQuiz onFinished={(history_: boolean[]) => {
+          setHistory(history_);
+          setStep(Step.Score);
+        }} quiz={quiz} />;
       case Step.Score:
-        return <></>;
+        return <Score history={history} onNext={() => {
+          setStep(Step.SetQuestionQty);
+        }} />;
     }
   }
 
