@@ -8,7 +8,7 @@ const SetQuestionCategory = (props: { categories: QuizCategory[], onClickNext: (
     const [selectedCategoryId, setSelectedCategoryId] = useState<string>(props.categories[0]?.id.toString())
 
     const radioList = props.categories.map((category: QuizCategory) => {
-        return <Radio value={category.id.toString()}>{category.name}</Radio>
+        return <Radio key={category.id} value={category.id.toString()}>{category.name}</Radio>
 
     })
 
@@ -27,15 +27,16 @@ const SetQuestionCategory = (props: { categories: QuizCategory[], onClickNext: (
                 onChange={setSelectedCategoryId}>
                 <SimpleGrid
                     columns={[1, 3, 4]}
-                    spacing={"4"}>
+                    spacing={"4"}
+                    pl={"10"}>
                     {radioList}
                 </SimpleGrid>
             </RadioGroup>
 
             <Button
                 onClick={() => props.onClickNext(selectedCategoryId)}
-                position={"absolute"}
-                top={"80%"}
+                position={"fixed"}
+                top={"90%"}
                 right={"10%"}
                 rightIcon={<ArrowForwardIcon />}>
                 Set difficulty

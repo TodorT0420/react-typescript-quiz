@@ -86,11 +86,13 @@ const PlayQuiz = (props: { quiz: QuizItem[], onFinished: (history: boolean[]) =>
                 fontSize={"3xl"}
                 mt={100}
                 mb={20}
+                padding={"10"}
                 dangerouslySetInnerHTML={{ __html: currentQuizItem.question }} />
             <RadioGroup
                 value={answer}
                 onChange={questionStatus === "unanswered" ? setAnswer : undefined}>
                 <SimpleGrid
+                   
                     columns={2}
                     spacing={4}>
                     {radioList}

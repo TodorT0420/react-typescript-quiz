@@ -1,4 +1,4 @@
-import { Box, Image } from "@chakra-ui/react"
+import { Box, Flex, Image, Spinner } from "@chakra-ui/react"
 import Header from "./components/Header/Header"
 import "../global.css";
 import { useEffect, useState } from "react";
@@ -9,9 +9,10 @@ import SetQuestionCategory from "./features/SetQuizCategory";
 import { QuizAPI } from "./api/quiz-api";
 import SetQuizDifficulty from "./features/SetQuizDifficulty";
 import PlayQuiz from "./features/PlayQuiz/PlayQuiz";
-import Score from "./features/PlayQuiz/Score";
+import Score from "./features/Score";
 
 enum Step {
+  Loading,
   SetQuestionQty,
   SetQuestionCategory,
   SetQuestionDifficulty,
@@ -20,7 +21,7 @@ enum Step {
 }
 
 const App = () => {
-  const [step, setStep] = useState<Step>(Step.SetQuestionQty);
+  const [step, setStep] = useState<Step>(Step.Loading);
   const [quiz, setQuiz] = useState<QuizItem[]>([]);
   const [quizParams, setQuizParams] = useState<FetchQuizParams>({
     amount: 0,
@@ -34,15 +35,29 @@ const App = () => {
   useEffect(() => {
     (async () => {
       setCategories([{ id: -1, name: "Mixed" }, ...(await QuizAPI.fetchCategories())]);
+      setStep(Step.SetQuestionQty);
     })();
   }, [])
 
   const renderScreenByStep = () => {
     switch (step) {
+      case Step.Loading:
+        return (
+          <Flex
+            top={0}
+            position={"absolute"}
+            justify={"center"}
+            alignItems={"center"}
+            minH={"100vh"}
+            width={"100%"}
+          >
+            <Spinner size="xl"/>
+          </Flex>
+        );
       case Step.SetQuestionQty:
         return <SetQuestionQty onClickNext={(amount: number) => {
           setQuizParams({ ...quizParams, amount });
-          setStep(Step.SetQuestionCategory)
+          setStep(Step.SetQuestionCategory);
         }} defaultValue={10} max={30} min={5} step={5} />;
       case Step.SetQuestionCategory:
         return <SetQuestionCategory
@@ -77,8 +92,10 @@ const App = () => {
     }
   }
 
+
+
   return (
-    <Box py={"10"} h="100%">
+    <Box py={10} h="100%">
       <Header />
       <Image src={buggleImg} position={"absolute"} zIndex={-1} right={-120} top={100} />
       <Box>{renderScreenByStep()}</Box>
@@ -86,4 +103,4 @@ const App = () => {
   )
 }
 
-export default App
+export default App;

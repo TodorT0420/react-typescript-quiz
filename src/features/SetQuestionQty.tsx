@@ -10,17 +10,16 @@ interface Props {
     onClickNext: (amount: number) => void;
 }
 
-const SetQuestionQty = (p: Props) => {
-    const [sliderValue, setSliderValue] = useState<number>(p.defaultValue);
+const SetQuestionQty = (props: Props) => {
+    const [sliderValue, setSliderValue] = useState<number>(props.defaultValue);
 
     const renderMarks = (): JSX.Element[] => {
         const marks = [];
-        for (let index = p.min; index < p.max; index += p.step) {
+        for (let index = props.min; index <= props.max; index += props.step) {
             marks.push(<SliderMark key={index} ml={-2} pt={4} value={index}>{index}</SliderMark>);
         }
         return marks;
     }
-
 
     return (
         <>
@@ -31,9 +30,9 @@ const SetQuestionQty = (p: Props) => {
                 <Slider
                     value={sliderValue}
                     maxWidth={400}
-                    max={p.max}
-                    min={p.min}
-                    step={p.step}
+                    max={props.max}
+                    min={props.min}
+                    step={props.step}
                     aria-label='slider-ex-6'
                     colorScheme="yellow"
                     onChange={(val) => setSliderValue(val)}>
@@ -44,9 +43,9 @@ const SetQuestionQty = (p: Props) => {
                     <SliderThumb />
                 </Slider>
             </Flex>
-            <Button onClick={() => p.onClickNext(sliderValue)} position={"absolute"} top={"80%"} right={"10%"} rightIcon={<ArrowForwardIcon />}>Set category</Button>
+            <Button onClick={() => props.onClickNext(sliderValue)} position={"absolute"} top={"80%"} right={"10%"} rightIcon={<ArrowForwardIcon />}>Set category</Button>
         </>
     )
 }
 
-export default SetQuestionQty
+export default SetQuestionQty;
